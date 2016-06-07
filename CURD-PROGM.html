@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="myapp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>CRUD Application</title>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<h2>	EMP DETAILS</h2>
+</head>
+<body ng-controller="mycontroller" bgcolor="#E6E6FA">
+<table cellpadding="4" cellspacing="4" border="4" align="center">
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Salary</th>
+	<th>gender</th>
+	<th>experience</th>
+	<th>address</th>
+	<th>Option</th>
+</tr>
+
+<tr ng-repeat="emp in employee">
+	<td>{{emp.ID}}</td>
+	<td>{{emp.Name}}</td>
+	
+	<td>{{emp.Salary}}</td>
+	<td>{{emp.gender}}</td>
+	<td>{{emp.experience}}</td>
+	<td>{{emp.address}}</td>
+	
+	<td><a href="#" ng-click="del(emp.ID)">Delete</a>|
+		<a href="#" ng-click="selectEdit(emp.ID)">Edit</a></td>
+</tr>
+</table>
+<br/><br/>
+
+<h2>	Employee Information</h2 >
+
+<table cellpadding="4" cellspacing="4" border="4" align="center">
+<tr>
+	<td>ID</td>
+	<td><input type="text" ng-model="ID"></td>
+</tr>
+
+<tr>
+	<td>Name</td>
+	<td><input type="text" ng-model="Name"></td>
+</tr>
+
+
+	<td>Salary</td>
+	<td><input type="text" ng-model="Salary"></td>
+</tr>
+<tr>
+	<td>gender</td>
+	<td><input type="text" ng-model="gender"></td>
+</tr>
+<tr>
+<tr>
+	<td>experience</td>
+	<td><input type="text" ng-model="experience"></td>
+</tr>
+<tr>
+	<td>address</td>
+	<td><input type="text" ng-model="address"></td>
+</tr>
+
+
+
+<tr>
+	<td>&nbsp;</td>
+	<td>
+	<input type="button" value="ADD" ng-click="add()">
+	<input type="button" value="Save" ng-click="save()">
+	</td>
+</tr>
+
+</table>
+
+<script type="text/javascript">
+angular.module('myapp',[])
+.controller('mycontroller', function($scope){
+	$scope.employee=[
+
+];
+function getSelectedIndex(ID){
+for(var i=0; i<$scope.employee.length; i++)
+if($scope.employee[i].ID==ID)
+	return i;
+return -1;
+}
+$scope.del= function(ID){
+var res= confirm("delete?");
+if(res==true){
+var index = getSelectedIndex(ID);
+$scope.employee.splice(index,1);
+}
+}
+$scope.selectEdit= function(ID){
+var index= getSelectedIndex(ID);
+var emp= $scope.employee[index];
+$scope.ID= emp.ID;
+$scope.Name= emp.Name;
+$scope.Salary= emp.Salary;
+$scope.gender= emp.gender;
+$scope.experience= emp.experience;
+$scope.address= emp.address;
+}
+$scope.add = function(){
+$scope.employee.push(
+{ID: $scope.ID, Name:$scope.Name, Salary:$scope.Salary,gender:$scope.gender,experience:$scope.experience,address:$scope.address}
+);
+$scope.ID='';
+$scope.Name='';
+$scope.Salary='';
+$scope.gender='';
+$scope.experience='';
+$scope.address='';
+};
+$scope.save=function(){
+var index=getSelectedIndex($scope.ID);
+$scope.employee[index].ID=$scope.ID;
+$scope.employee[index].Name=$scope.Name;
+$scope.employee[index].Salary=$scope.Salary;
+$scope.employee[index].gender=$scope.gender;
+$scope.employee[index].experience=$scope.experience;
+$scope.employee[index].address=$scope.address;
+};
+});
+</script>
+
+
+</body>
+</html>
